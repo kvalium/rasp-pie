@@ -34,6 +34,9 @@ view all included .1 80
 access MyROGroup "" any noauth exact all none none
 access MyRWGroup "" any noauth exact all all all
 ```
+
+3) Restart SNMP
+
 Server side
 -----------
 1) Web server running with php_snmp extension activated.
