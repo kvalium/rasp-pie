@@ -11,7 +11,7 @@ Installation
 Client side (on the Rpi)
 -----------------------
 
-1) Install snmpd : apt-get install snmpd
+1) Install snmpd : ```apt-get install snmpd```
 
 2) Edit your SNMP conf file : nano /etc/snmp/snmpd.conf 
 
