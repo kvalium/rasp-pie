@@ -16,7 +16,7 @@ Client side (on the Rpi)
 2) Edit your SNMP conf file : nano /etc/snmp/snmpd.conf 
 
 Configuration example :
-
+```
 ## sec.name source community
 com2sec local 127.0.0.1 public
 com2sec mynetwork 192.168.1.0/24 public
@@ -33,7 +33,7 @@ view all included .1 80
 ## context sec.model sec.level prefix read write notif
 access MyROGroup "" any noauth exact all none none
 access MyRWGroup "" any noauth exact all all all
-
+```
 Server side
 -----------
 1) Web server running with php_snmp extension activated.
