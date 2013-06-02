@@ -1,0 +1,30 @@
+/* 
+	CUSTOM CSS OVERWRITE
+*/
+
+.login-form:before {
+	border-width: inherit;
+}
+
+.login-form .login-field{
+	width:400px;
+}
+
+.table_infos{
+	width:100%;
+}
+
+.progress span{
+	color: black;
+	position: relative;
+	float:left;
+	min-width:50px;
+    font-size: 14.994px;
+    font-weight: 700;
+    padding-top: 1px;
+    transition: all 0.25s ease-out 0s;
+}
+
+.progress .bar{
+	background-color : #27ae60;
+}
