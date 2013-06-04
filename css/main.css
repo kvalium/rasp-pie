@@ -26,5 +26,11 @@
 }
 
 .progress .bar{
-	background-color : #27ae60;
+    background-color : #27ae60;
+    transition : background-color 1000ms linear;
 }
+
+.table_infos .txt_infos{
+    width:200px;
+}
+

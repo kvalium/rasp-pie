@@ -1,45 +1,32 @@
 <?php 
 	// this page contains OID codes corresponding to a defined propertie.
+	if(isset($_GET['snmpdata'])){
+	$OID_HOSTNAME 	= "iso.3.6.1.2.1.1.5.0";
+	$OID_CPU_LOAD	= "iso.3.6.1.4.1.2021.10.1.3.2";
+	$OID_CPU_USAGE	= "iso.3.6.1.4.1.2021.11.9.0";
+	$OID_TOTAL_RAM	= "iso.3.6.1.4.1.2021.4.5.0";
+	$OID_FREE_RAM	= "iso.3.6.1.4.1.2021.4.11.0";
+	$OID_USED_RAM	= "iso.3.6.1.4.1.2021.4.6.0";
+	$OID_SHARED_RAM = "iso.3.6.1.4.1.2021.4.13.0";
+	$OID_BUFF_RAM	= "iso.3.6.1.4.1.2021.4.14.0";
+	$OID_CACHED_RAM = "iso.3.6.1.4.1.2021.4.15.0";
+	
+	$ipadr = "192.168.1.36";
+	$snmp_community = "public";
 
-		$ipadr = "192.168.1.36";
-		$snmp_community = "public";
+	$hostname 	= strstr(snmp2_get($ipadr,$snmp_community,$OID_HOSTNAME),' ');
+	$cpu_usg  	= strstr(snmp2_get($ipadr,$snmp_community,$OID_CPU_USAGE),' ');
 	
-		$OID_HOSTNAME 	= "iso.3.6.1.2.1.1.5.0";
-		$OID_CPU_LOAD	= "iso.3.6.1.4.1.2021.10.1.3.2";
-		$OID_CPU_USAGE	= "iso.3.6.1.4.1.2021.11.9.0";
-		$OID_TOTAL_RAM	= "iso.3.6.1.4.1.2021.4.5.0";
-		$OID_FREE_RAM	= "iso.3.6.1.4.1.2021.4.11.0";
-		$OID_USED_RAM	= "iso.3.6.1.4.1.2021.4.6.0";
-		$OID_SHARED_RAM = "iso.3.6.1.4.1.2021.4.13.0";
-		$OID_BUFF_RAM	= "iso.3.6.1.4.1.2021.4.14.0";
-		$OID_CACHED_RAM = "iso.3.6.1.4.1.2021.4.15.0";
-
-		$hostname 	= strstr(snmp2_get($ipadr,$snmp_community,$OID_HOSTNAME),' ');
-		$cpu_usg  	= strstr(snmp2_get($ipadr,$snmp_community,$OID_CPU_USAGE),' ');
-		
-		// MEMORY USAGES
-		$total_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_TOTAL_RAM),' ');
-		//$free_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_FREE_RAM),' ');
-		$used_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_USED_RAM),' ');
-		//$shared_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_SHARED_RAM),' ');
-		$buff_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_BUFF_RAM),' ');
-		$cached_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_CACHED_RAM),' ');
-		
-		$real_ram_usage = $total_ram-$used_ram-$buff_ram-$cached_ram;
-		$ram_usg = round($real_ram_usage/$total_ram*100);
-		
-		//echo $cpu_usg;
-		
-		$json = array(
-		  "CPU Usage" => $cpu_usg,
-		  "RAM Usage" => $ram_usg
-		);
-		
-		echo json_encode($json);
+	// MEMORY USAGES
+	$total_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_TOTAL_RAM),' ');
+	$free_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_FREE_RAM),' ');
+	$used_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_USED_RAM),' ');
+	$shared_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_SHARED_RAM),' ');
+	$buff_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_BUFF_RAM),' ');
+	$cached_ram	= strstr(snmp2_get($ipadr,$snmp_community,$OID_CACHED_RAM),' ');
 	
-
-	
-	
+	echo $cpu_usg;
+	}
 /*
 
 CPU Statistics
