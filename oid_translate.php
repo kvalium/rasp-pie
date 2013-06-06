@@ -5,7 +5,6 @@
     $ipadr = "192.168.1.36";
     $snmp_community = "public";
 
-    $OID_HOSTNAME = "iso.3.6.1.2.1.1.5.0";
     $OID_CPU_LOAD = "iso.3.6.1.4.1.2021.10.1.3.2";
     $OID_CPU_USAGE = "iso.3.6.1.4.1.2021.11.9.0";
     $OID_TOTAL_RAM = "iso.3.6.1.4.1.2021.4.5.0";
@@ -14,17 +13,16 @@
     $OID_SHARED_RAM = "iso.3.6.1.4.1.2021.4.13.0";
     $OID_BUFF_RAM = "iso.3.6.1.4.1.2021.4.14.0";
     $OID_CACHED_RAM = "iso.3.6.1.4.1.2021.4.15.0";
-    $OID_CPU_HEAT = "iso.3.6.1.2.1.25.5.1.1.1.2920"; // not sure
     $OID_UPTIME = "iso.3.6.1.2.1.25.1.1.0";
+    $OID_CPU_IDLE = "iso.3.6.1.4.1.2021.11.11.0";
 
-    $hostname = strstr(snmp2_get($ipadr, $snmp_community, $OID_HOSTNAME), ' ');
     $uptime = explode(" ",snmp2_get($ipadr, $snmp_community, $OID_UPTIME));
     $uptime = explode(":",$uptime[2]);
-    $uptime = $uptime[1]." min ".floor($uptime[2])." sec.";
+    $uptime = $uptime[0]." hour ".$uptime[1]." min ".floor($uptime[2])." sec.";
 
     // CPU
-    $cpu_usg = strstr(snmp2_get($ipadr, $snmp_community, $OID_CPU_USAGE), ' ');
-    $cpu_heat = strstr(snmp2_get($ipadr, $snmp_community, $OID_CPU_HEAT), ' ');
+    //$cpu_usg = strstr(snmp2_get($ipadr, $snmp_community, $OID_CPU_USAGE), ' ');
+    $cpu_usg = 100 - strstr(snmp2_get($ipadr, $snmp_community, $OID_CPU_IDLE), ' ');
 
     // MEMORY USAGES
     $total_ram = strstr(snmp2_get($ipadr, $snmp_community, $OID_TOTAL_RAM), ' ');
@@ -40,19 +38,15 @@
     //echo $cpu_usg;
 
     $json = array(
-        "Hostname" => $hostname,
         "Uptime" => $uptime,
         "CPU" => $cpu_usg,
-        "CPU_heat" => $cpu_heat,
+        //"CPU_heat" => $cpu_heat,
         "RAM" => $ram_usg,
         "Total_RAM" => round($total_ram / 1000),
         "Used_RAM" => round($real_ram_usage / 1000)
     );
 
     echo json_encode($json);
-
-
-
 
     /*
 

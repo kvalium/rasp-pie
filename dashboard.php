@@ -1,9 +1,22 @@
 <?php
 include('struct/header.html');
 include('struct/navbar.html');
+
+    $ipadr = "192.168.1.36";
+    $snmp_community = "public";
+    // static data
+    $OID_HOSTNAME = "iso.3.6.1.2.1.1.5.0";
+    $hostname = strstr(snmp2_get($ipadr, $snmp_community, $OID_HOSTNAME), ' ');
+    
 ?>
 
 <h1>Raspberry Dashboard</h1>
+
+<?php 
+    if(!extension_loaded('snmp')){
+        echo "<p class='palette palette-pumpkin'>SNMP extension is not activated ! <br /><small>Raspberry Pi state cannot be checked :(</small></p>";
+    }else{
+?>
 
 <div class="row">
     <div class="offset2 span8">
@@ -13,7 +26,7 @@ include('struct/navbar.html');
                 <td class="txt_infos"><h4>Hostname</h4></td>
                 <td>
                     <p>
-                        <span id="hostnametxt">-</span>
+                        <span id="hostnametxt"><?php echo $hostname;?></span>
                     </p>
                 </td>
             </tr>
@@ -71,5 +84,6 @@ include('struct/navbar.html');
 </div>
 
 <?php
+    }
 include('struct/footer.html');
 ?>
