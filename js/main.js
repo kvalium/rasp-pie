@@ -26,6 +26,5 @@ $(document).ready(function() {
         });
         setTimeout(getData, 3000);
     }
-
     getData();
 });

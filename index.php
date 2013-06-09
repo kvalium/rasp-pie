@@ -10,7 +10,7 @@
 	<!-- Login form -->
 	<div class="row">
 		<div class="offset3 span6 offset3">
-			<form class="login-form" method="post" action="dashboard.php">
+			<form class="login-form" method="post" action="home.php">
 				<fieldset>
 					<div class="control-group">
 					  <input type="text" required placeholder="Enter your name" class="login-field">

@@ -1,8 +1,9 @@
 <?php
 include('struct/header.html');
 include('struct/navbar.html');
+include('struct/functions.php');
 
-    $ipadr = "192.168.1.36";
+    $ipadr = "192.168.1.35";
     $snmp_community = "public";
     // static data
     $OID_HOSTNAME = "iso.3.6.1.2.1.1.5.0";
@@ -83,6 +84,8 @@ include('struct/navbar.html');
     </div>
 </div>
 
+
+<script src="js/main.js"></script>
 <?php
     }
 include('struct/footer.html');
