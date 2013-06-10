@@ -3,7 +3,11 @@ rasp-pie
 
 Web interface for monitoring several Raspberry Pi.
 
-Current version is still an early beta so many features doesn't work. It currently retrieve the CPU usage (%) of only one Rpi with the provided IP address (in oid_translate.php file), with a 3 seconds actualization.
+Current version can scan your subnet to seek alive hosts, which are added to a list. On click on each item, you reach the dashboard page, where system informations are displayed (CPU%, RAM%, total RAM, Used RAM, hostname, uptime and IP Address).
+
+Incoming improvements
+---------------------
+Using SSH connection for interact with the Pi (change hostname, reboot, etc.).
 
 Installation
 ============
@@ -19,11 +23,11 @@ Configuration example :
 ```
 ## sec.name source community
 com2sec local 127.0.0.1 public
-com2sec mynetwork 192.168.1.0/24 public
+com2sec mynetwork 192.168.0.0/16 public
 
 ## group.name sec.model sec.name
-group MyRWGroup v1 local
-group MyRWGroup v2c local
+group MyRWGroup v1 mynetwork
+group MyRWGroup v2c mynetwork
 group MyROGroup v1 mynetwork
 group MyROGroup v2c mynetwork
 
@@ -43,6 +47,6 @@ Server side
 
 2) Unzip the sources in your web server www folder
 
-3) Edit the oid_translate.php file in order to provide the Rpi IP address.
+3) Edit the struct/params.json file to provide valid SNMP community and your subnet address.
 
 Note : the authentification is not currently activated.
