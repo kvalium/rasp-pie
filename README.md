@@ -39,7 +39,7 @@ access MyROGroup "" any noauth exact all none none
 access MyRWGroup "" any noauth exact all all all
 ```
 
-3) Restart SNMP
+3) Restart SNMP : ```sudo service snmpd restart```
 
 Server side
 -----------
