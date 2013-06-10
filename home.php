@@ -15,9 +15,6 @@
     $fp = fopen($host_file, "r");
     $hosts = json_decode(fgets($fp));
     fclose($fp);
-
-    set_hostname("192.168.1.35", "plop");
-
     
 ?>
 
