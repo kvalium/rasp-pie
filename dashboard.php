@@ -1,23 +1,25 @@
 <?php
-include('struct/header.html');
-include('struct/navbar.html');
-include('struct/functions.php');
+    include('struct/header.html');
+    include('struct/navbar.html');
+    include('struct/functions.php');
 
-    $ipadr = "192.168.1.35";
-    $snmp_community = "public";
-    // static data
-    $OID_HOSTNAME = "iso.3.6.1.2.1.1.5.0";
-    $hostname = strstr(snmp2_get($ipadr, $snmp_community, $OID_HOSTNAME), ' ');
+    // Check the presence of host ip, then check if host is alive. Finally, 
+    // retrieves its hostname.
+    if(isset($_GET['host'])){
+        $ipadr = $_GET['host'];
+        if(isup($ipadr)){
+            $hostname = strstr(snmp2_get($ipadr, PRM_COMMUNITY, OID_HOSTNAME), ' ');
+        }else{
+            die("<div class='alert alert-error'><h4>Host seems down !</h4><p>Unable to reach $ipadr.</p></div>");
+        }
+    }else{
+        die("<div class='alert alert-error'><h4>Invalid host provided !</h4><p>Host $ipadr not found.</p></div>");
+    }
     
 ?>
 
 <h1>Raspberry Dashboard</h1>
 
-<?php 
-    if(!extension_loaded('snmp')){
-        echo "<p class='palette palette-pumpkin'>SNMP extension is not activated ! <br /><small>Raspberry Pi state cannot be checked :(</small></p>";
-    }else{
-?>
 
 <div class="row">
     <div class="offset2 span8">
@@ -28,6 +30,15 @@ include('struct/functions.php');
                 <td>
                     <p>
                         <span id="hostnametxt"><?php echo $hostname;?></span>
+                    </p>
+                </td>
+            </tr>
+            <!-- IP ADR -->
+            <tr>
+                <td class="txt_infos"><h4>IP Address</h4></td>
+                <td>
+                    <p>
+                        <span id="iptxt"><?php echo $ipadr;?></span>
                     </p>
                 </td>
             </tr>
@@ -87,6 +98,5 @@ include('struct/functions.php');
 
 <script src="js/main.js"></script>
 <?php
-    }
 include('struct/footer.html');
 ?>

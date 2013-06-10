@@ -1,7 +1,9 @@
 <?php
+    
     include('struct/header.html');
     include('struct/navbar.html');
     include('struct/functions.php');
+    
 
     $host_file = "hosts.json";
 
@@ -14,7 +16,9 @@
     $hosts = json_decode(fgets($fp));
     fclose($fp);
 
-    //get_hosts_list();
+    set_hostname("192.168.1.35", "plop");
+
+    
 ?>
 
 <h1>Welcome !</h1>
@@ -30,9 +34,15 @@
     <tbody>
         <?php
             foreach ($hosts as $host) {
-                echo "<tr><td>$host</td>";
-                echo "<td>".get_hostname($host)."</td>";
-                echo "<td><a href='dashboard.php?host=$host'><span class='fui-search'></span></a></td></tr>";
+                if(isup($host)){
+                    echo "<tr><td>$host</td>";
+                    echo "<td>".get_hostname($host)."</td>";
+                    echo "<td><a href='dashboard.php?host=$host'><span class='fui-search'></span></a></td></tr>";
+                }else{
+                    echo "<tr><td>$host</td>";
+                    echo "<td>I'M DOWN !!!</td>";
+                    echo "<td><a href='dashboard.php?host=$host'><span class='fui-search'></span></a></td></tr>";
+                }
             }
         ?>
     </tbody>
