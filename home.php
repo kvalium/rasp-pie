@@ -16,6 +16,8 @@
     $hosts = json_decode(fgets($fp));
     fclose($fp);
     
+    //set_hostname("192.168.1.35", "Raspi");
+    
 ?>
 
 <h1>Welcome !</h1>

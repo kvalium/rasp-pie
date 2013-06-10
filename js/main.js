@@ -6,7 +6,7 @@ $(document).ready(function() {
             
             $("#cpu").width(data.CPU + '%');
             $("#cputxt").text(data.CPU + '%');
-            //$("#cpuheattxt").text(data.CPU_heat);
+            $("#cpuheattxt").text(data.CPU_Heat);
             
             $("#ram").width(data.RAM + '%');
             $("#ramtxt").text(data.RAM + '%');

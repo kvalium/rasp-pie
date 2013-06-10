@@ -62,16 +62,29 @@
         }
     }
     
+    function ssh_connexion($ip){
+        $ssh = new Net_SSH2($ip);
+        if (!$ssh->login('pi', 'raspberry')) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
     // retrieve hostname for a given IP
     function get_hostname($ip) {
-        return $hostname = strstr(snmp2_get($ip, PRM_COMMUNITY, OID_HOSTNAME), ' ');
+        $ssh = new Net_SSH2($ip);
+        if (!$ssh->login('pi', 'raspberry')) {
+            exit();
+        }
+        return $ssh->exec("hostname");
     }
     
     function set_hostname($ip,$new_hostname){
         snmp2_set($ip, PRM_COMMUNITY, OID_HOSTNAME, "s", $new_hostname);
         $ssh = new Net_SSH2($ip);
         if (!$ssh->login('pi', 'raspberry')) {
-            exit('Login Failed');
+            exit();
         }
         $ssh->exec("sudo hostname -v $new_hostname");
     }
@@ -91,6 +104,14 @@
     
     function get_cpu_usg($ip) {
         return 100 - strstr(snmp2_get($ip, PRM_COMMUNITY, OID_CPU_IDLE), ' ');
+    }
+    
+    function get_cpu_heat($ip){
+        $ssh = new Net_SSH2($ip);
+        if (!$ssh->login('pi', 'raspberry')) {
+            exit();
+        }
+        return round($ssh->exec("cat /sys/class/thermal/thermal_zone0/temp")/1000);
     }
     
     function get_total_ram($ip) {

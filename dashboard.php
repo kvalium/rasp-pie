@@ -7,9 +7,7 @@
     // retrieves its hostname.
     if(isset($_GET['host'])){
         $ipadr = $_GET['host'];
-        if(isup($ipadr)){
-            $hostname = strstr(snmp2_get($ipadr, PRM_COMMUNITY, OID_HOSTNAME), ' ');
-        }else{
+        if(!isup($ipadr)){
             die("<div class='alert alert-error'><h4>Host seems down !</h4><p>Unable to reach $ipadr.</p></div>");
         }
     }else{
@@ -29,7 +27,7 @@
                 <td class="txt_infos"><h4>Hostname</h4></td>
                 <td>
                     <p>
-                        <span id="hostnametxt"><?php echo $hostname;?></span>
+                        <span id="hostnametxt"><?php echo get_hostname($ipadr);?></span>
                     </p>
                 </td>
             </tr>
@@ -65,7 +63,7 @@
                 <td></td>
                 <td>
                     <p>
-                        Heat: <span id="cpuheattxt">-</span>°C
+                        Heat: <span id="cpuheattxt">-</span> °C
                     </p>
                 </td>
             </tr>
