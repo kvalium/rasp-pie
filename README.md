@@ -1,5 +1,7 @@
-rasp-pie - Web interface for monitoring several Raspberry Pi.
-=============================================================
+Rasp Pie
+========
+Web interface for monitoring several Raspberry Pi.
+--------------------------------------------------
 
 ![Rasp Pie screenshot](https://raw.github.com/julienmonchany/rasp-pie/master/screenshot.png)
 
