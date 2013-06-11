@@ -191,7 +191,7 @@ you can use the generic selector below, but it's slower:
   line-height: 100px;
 }
 .demo-logo .logo {
-  background: url(../images/demo/rasp_pie.png) center 0 no-repeat;
+  background: url(../images/rasp_pie.png) center 0 no-repeat;
   background-size: 237px 300px;
   height: 300px;
   margin: 0 auto 26px;
