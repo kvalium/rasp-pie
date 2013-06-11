@@ -2,6 +2,7 @@ rasp-pie - Web interface for monitoring several Raspberry Pi.
 =============================================================
 
 [Screenshot](https://raw.github.com/julienmonchany/rasp-pie/master/screenshot.png "Logo Title Text 1")
+[![solarized dualmode](https://github.com/altercation/solarized/raw/master/img/solarized-yinyang.png)](#features)
 
 Current version can scan your subnet to seek alive hosts, which are added to a list. Down hosts are also identified.
 
