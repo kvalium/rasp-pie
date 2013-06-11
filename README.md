@@ -1,7 +1,7 @@
 rasp-pie - Web interface for monitoring several Raspberry Pi.
 =============================================================
 
-[![Rasp Pie screenshot](https://raw.github.com/julienmonchany/rasp-pie/master/screenshot.png)]
+![Rasp Pie screenshot](https://raw.github.com/julienmonchany/rasp-pie/master/screenshot.png)
 
 Current version can scan your subnet to seek alive hosts, which are added to a list. Down hosts are also identified.
 
