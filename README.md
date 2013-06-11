@@ -1,9 +1,12 @@
-rasp-pie
-========
+rasp-pie - Web interface for monitoring several Raspberry Pi.
+=============================================================
 
-Web interface for monitoring several Raspberry Pi.
+[alt text](https://github.com/julienmonchany/rasp-pie/raw/master/screenshot.png "Logo Title Text 1")
 
-Current version can scan your subnet to seek alive hosts, which are added to a list. On click on each item, you reach the dashboard page, where system informations are displayed (CPU%, RAM%, total RAM, Used RAM, hostname, uptime and IP Address).
+Current version can scan your subnet to seek alive hosts, which are added to a list. Down hosts are also identified.
+
+On click on each item, you reach the dashboard page, where system informations are displayed (CPU%, RAM%, total RAM, Used RAM, hostname, uptime and IP Address).
+Then it is possible to change the Raspberry hostname, reboot or shutdown it.
 
 Incoming improvements
 ---------------------
