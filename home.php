@@ -1,9 +1,8 @@
 <?php
-    
     include('struct/header.html');
     include('struct/navbar.html');
     include('struct/functions.php');
-    
+
 
     $host_file = "hosts.json";
 
@@ -15,35 +14,39 @@
     $fp = fopen($host_file, "r");
     $hosts = json_decode(fgets($fp));
     fclose($fp);
-    
+
     //set_hostname("192.168.1.35", "Raspi");
-    
+    $table = "";$alive=0;
+    count($hosts);
+    foreach ($hosts as $host) {
+        if (isup($host)) {
+            $table .= "<tr><td><span class='fui-check' style='color:#16a085'></span></img></td>";
+            $table .= "<td>" . get_hostname($host) . "</td>";
+            $table .= "<td>$host</td>";
+            $table .= "<td><a href='dashboard.php?host=$host'><span class='fui-search'></span></a></td></tr>";
+            $alive++;
+        } else {
+            $table .= "<tr class='palette palette-pumpkin'><td><span class='fui-cross'></span></img></td>";
+            $table .= "<td>-</td>";
+            $table .= "<td>$host</td>";
+            $table .= "<td>Host seems down</td></tr>";
+        }
+    }
 ?>
 
 <h1>Welcome !</h1>
-<h2>Hosts alive</h2>
-<table class="table table-striped">
+<h2>Alive hosts <small><?php echo "($alive/".count($hosts).")";?></small></h2>
+<table class="table">
     <thead>
         <tr>
-            <th>IP address</th>
+            <th>Status</th>
             <th>Hostname</th>
+            <th>IP address</th>
             <th>Details</th>
         </tr>
     </thead>
     <tbody>
-        <?php
-            foreach ($hosts as $host) {
-                if(isup($host)){
-                    echo "<tr><td>$host</td>";
-                    echo "<td>".get_hostname($host)."</td>";
-                    echo "<td><a href='dashboard.php?host=$host'><span class='fui-search'></span></a></td></tr>";
-                }else{
-                    echo "<tr><td>$host</td>";
-                    echo "<td>I'M DOWN !!!</td>";
-                    echo "<td><a href='dashboard.php?host=$host'><span class='fui-search'></span></a></td></tr>";
-                }
-            }
-        ?>
+        <?php echo $table; ?>
     </tbody>
 </table>
 

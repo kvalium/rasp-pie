@@ -62,13 +62,20 @@
         }
     }
     
-    function ssh_connexion($ip){
+    function reboot($ip){
         $ssh = new Net_SSH2($ip);
         if (!$ssh->login('pi', 'raspberry')) {
-            return false;
-        }else{
-            return true;
+            exit();
         }
+        return $ssh->exec("sudo reboot");
+    }
+    
+    function shutdown($ip){
+        $ssh = new Net_SSH2($ip);
+        if (!$ssh->login('pi', 'raspberry')) {
+            exit();
+        }
+        return $ssh->exec("sudo halt");
     }
     
     // retrieve hostname for a given IP
