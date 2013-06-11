@@ -12,7 +12,7 @@ Then it is possible to change the Raspberry hostname, reboot or shutdown it.
 
 Incoming improvements
 ---------------------
-Using SSH connection for interact with the Pi (change hostname, reboot, etc.).
+Activate authentification, reset the hosts list, refresh the host list to check the hosts status
 
 Installation
 ============
