@@ -67,7 +67,7 @@
         if (!$ssh->login('pi', 'raspberry')) {
             exit();
         }
-        return $ssh->exec("sudo reboot");
+        return $ssh->exec("sudo reboot &");
     }
     
     function shutdown($ip){
@@ -75,7 +75,7 @@
         if (!$ssh->login('pi', 'raspberry')) {
             exit();
         }
-        return $ssh->exec("sudo halt");
+        return $ssh->exec("sudo halt &");
     }
     
     // retrieve hostname for a given IP
