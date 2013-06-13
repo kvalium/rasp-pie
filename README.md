@@ -31,8 +31,6 @@ com2sec local 127.0.0.1 public
 com2sec mynetwork 192.168.0.0/16 public
 
 ## group.name sec.model sec.name
-group MyRWGroup v1 mynetwork
-group MyRWGroup v2c mynetwork
 group MyROGroup v1 mynetwork
 group MyROGroup v2c mynetwork
 
@@ -41,7 +39,6 @@ view all included .1 80
 
 ## context sec.model sec.level prefix read write notif
 access MyROGroup "" any noauth exact all none none
-access MyRWGroup "" any noauth exact all all all
 ```
 
 3) Restart SNMP : ```sudo service snmpd restart```
