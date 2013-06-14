@@ -51,4 +51,4 @@ Server side
 
 3) Edit the struct/params.json file to provide valid SNMP community and your subnet address.
 
-Note : the authentification is not currently activated.
+Note : the authentification is not currently activated. To reanalyse the subnet, delete file hosts.json and refresh the page. 
