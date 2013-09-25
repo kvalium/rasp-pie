@@ -5,7 +5,7 @@ Rasp Pie
 
 Rasp Pie is a web interface for monitoring several Raspberry Pi. 
 It allows to scan your subnet to detect alive Raspberry then you can see their status (% CPU, % RAM, etc.).
-You also can change their hostname, reboot or shutdown them. 
+You can also change their hostname, reboot or shutdown them. 
 
 
 
