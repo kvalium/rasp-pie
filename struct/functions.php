@@ -38,19 +38,6 @@
     }
     get_params();
 
-    // Scan the subnet in order to retrieve the list of alive hosts
-    function get_hosts_list($file) {
-        $isup = array();
-        for ($ip = 30; $ip <= 40; $ip++) {
-            if(isup(PRM_SUBNET . $ip)){
-                $isup[] = PRM_SUBNET . $ip;
-            }
-        }
-        // writing the hosts IP adresses in a json file
-        $fp = fopen($file, "w+"); //lecture
-        fputs($fp, json_encode($isup));
-        fclose($fp);
-    }
 
     function isup($ip) {
         $socket = @fsockopen($ip, 22, $errno, $errstr, 0.1);
@@ -64,7 +51,7 @@
     
     function reboot($ip){
         $ssh = new Net_SSH2($ip);
-        if (!$ssh->login('pi', 'raspberry')) {
+        if (!$ssh->login('pi', 'aaa')) {
             exit();
         }
         return $ssh->exec("sudo reboot &");
@@ -72,7 +59,7 @@
     
     function shutdown($ip){
         $ssh = new Net_SSH2($ip);
-        if (!$ssh->login('pi', 'raspberry')) {
+        if (!$ssh->login('pi', 'aaa')) {
             exit();
         }
         return $ssh->exec("sudo halt &");
@@ -81,8 +68,8 @@
     // retrieve hostname for a given IP
     function get_hostname($ip) {
         $ssh = new Net_SSH2($ip);
-        if (!$ssh->login('pi', 'raspberry')) {
-            exit();
+        if (!$ssh->login('pi', 'aaa')) {
+            return "Erreur de connexion SSH";
         }
         return $ssh->exec("hostname");
     }
@@ -90,7 +77,7 @@
     function set_hostname($ip,$new_hostname){
         snmp2_set($ip, PRM_COMMUNITY, OID_HOSTNAME, "s", $new_hostname);
         $ssh = new Net_SSH2($ip);
-        if (!$ssh->login('pi', 'raspberry')) {
+        if (!$ssh->login('pi', 'aaa')) {
             exit();
         }
         $ssh->exec("sudo hostname -v $new_hostname");

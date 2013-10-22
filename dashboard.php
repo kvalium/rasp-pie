@@ -151,7 +151,7 @@ if(isset($_POST['hostname'])){
     </form>
 </div>
 
-<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
 <?php
 include('struct/footer.html');
 ?>
