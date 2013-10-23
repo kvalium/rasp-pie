@@ -12,16 +12,14 @@ function isup($ip) {
 
 $table = "";
 
-$isup = array();
-
 $ip = $_GET['ip'];
 $host = "192.168.0." . $ip;
-$file = "../hosts.txt";
+$file = "../hosts";
 
 if (isup($host)) {
     $table .= "<tr><td><span class='fui-check' style='color:#16a085'></span></img></td>";
-    $table .= "<td>hostname</td>";
-    $table .= "<td><span class='fui-search'></td>";
+    $table .= "<td><button class='resolve' value='$host'>Resolve</button></td>";
+    $table .= "<td>$host</td>";
     $table .= "<td><a href='dashboard.php?host=$host'><span class='fui-search'></span></a></td></tr>";
 
     if (file_exists($file)) {

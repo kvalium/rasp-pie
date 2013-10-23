@@ -1,14 +1,34 @@
     $(document).ready(function() {
-        $('#btn_submit').click(function() {
-            for (var i = $("#start").val(); i < $("#end").val(); i++) {
+        $("#current_scan").hide();
+ 
+        $( "#scanform" ).submit(function( event ) {
+            $("#current_scan").show();
+            for (var i = $("#scanstart").val(); i <= $("#scanend").val(); i++) {
                 $.ajax({
-                    type: "GET",
                     url: "struct/isup.php",
                     data: "ip=" + i,
+                    dataType: "html",
                     success: function(msg) {
-                        $("#hosts").append(msg);
+                            var nbh = parseInt($( "#scanned" ).text());
+                            ++nbh;
+                            $( "#scanned" ).text(nbh);
+                        if(msg !== ""){
+                            $("#hosts").append(msg);
+                            var nba = parseInt($( "#added" ).text());
+                            ++nba;
+                            $( "#added" ).text(nba);
+                            
+                        }
                     }
-                });
+                }
+
+            );
+                    
             }
+            $("#current_scan").delay(15000).hide(200);
+            $("#scanned").text(0);
+            $("#added").text(0);
+            return;
+            
         });
     });
