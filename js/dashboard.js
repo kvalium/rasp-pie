@@ -1,7 +1,8 @@
 $(document).ready(function() {
     function getData() {
-        $ip = $("#iptxt").text();
-        $.getJSON('oid_translate.php?ip=' + $ip, function(data) {
+        //$ip = $("#iptxt").text();
+        //$.getJSON('oid_translate.php?ip=' + $ip, function(data) {
+        $.getJSON('oid_translate.php', function(data) {
             $("#uptimetxt").text(data.Uptime);
 
             $("#cpu").width(data.CPU + '%');

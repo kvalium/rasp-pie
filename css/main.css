@@ -1,13 +1,44 @@
 /* 
 	CUSTOM CSS OVERWRITE
 */
+.headline{
+    text-align: center;
+}
+
+.headline h1{
+    font-size: 90px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 100px;
+}
+
+.headline small {
+    color: rgba(52, 73, 94, 0.3);
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    padding-top: 5px;
+}
+
+.logo {
+  background: url(../images/rasp_pie.png) center 0 no-repeat;
+  background-size: 237px 300px;
+  height: 300px;
+  margin: 0 auto 26px;
+  overflow: hidden;
+  text-indent: -9999em;
+  width: 237px;
+}
 
 .login-form:before {
 	border-width: inherit;
 }
 
-.login-form .login-field{
-	width:400px;
+.login-form {
+    margin-left: 60px;
+    margin-right: 60px;
+
 }
 
 .table_infos{

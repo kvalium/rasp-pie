@@ -1,6 +1,11 @@
 <?php
-    set_include_path(get_include_path() . PATH_SEPARATOR . 'struct/phpseclib');
-    include('struct/phpseclib/Net/SSH2.php');
+    //set_include_path(get_include_path() . PATH_SEPARATOR . '/struct/phpseclib');
+    include('phpseclib/Crypt/Random.php');
+    include('phpseclib/Crypt/Hash.php');
+    include('phpseclib/Crypt/RC4.php');
+    include('phpseclib/Math/BigInteger.php');
+    include('phpseclib/Net/SSH2.php');
+    include('params.php'); // this file contains global params
     
     // OID identifiers for SNMP requests
     define("OID_HOSTNAME", "iso.3.6.1.2.1.1.5.0");
@@ -14,30 +19,22 @@
     define("OID_CACHED_RAM", "iso.3.6.1.4.1.2021.4.15.0");
     define("OID_UPTIME", "iso.3.6.1.2.1.25.1.1.0");
     define("OID_CPU_IDLE", "iso.3.6.1.4.1.2021.11.11.0");
-
+    
+    // vars
+   
     // Check if the SNMP extension is activated
     if(!extension_loaded('snmp')){
-        die("<p class='palette palette-pumpkin'>SNMP extension is not activated ! <br /><small>Raspberry Pi state cannot be checked :(</small></p>");
+        echo "<p class='palette palette-pumpkin'>SNMP extension is not activated! <br /><small>Raspberry Pi state cannot be checked :(</small></p>";
     }
     
-    // retrieves params from the params.json file
-    function get_params() {
-        $param_file = "./struct/params.json";
-        if (!file_exists($param_file)) {
-            die("<div class='alert alert-error'><h4>Unable to find the params file !</h4><p>Please create file <b>$param_file</b>.</p></div>");
-        } else {
-            // retrieve hosts list from the json file
-            $db = json_decode(file_get_contents($param_file));
-            try {
-                define("PRM_COMMUNITY", $db->{'snmp_community'});
-                define("PRM_SUBNET", $db->{'raspberry_subnet'});
-            } catch (Exception $e) {
-                die("<div class='alert alert-error'><h4>Params file is invalid!</h4><p>Please stop break everything.</p></div>");
-            }
-        }
-    }
-    get_params();
+    // Database Connection
+    function database_connection(){
+        $db = mysql_connect(get_params("database_host"), get_params("database_login"), get_params("database_password"));
 
+        // on sélectionne la base
+        mysql_select_db(get_params("database_name"),$db)or die("<div class='alert alert-error'><h4>Unable to connect to the MySQL server. Have you check <b>params.php</b> in <b>struct</b> folder?</p></div>"); 
+    }
+    
 
     function isup($ip) {
         $socket = @fsockopen($ip, 22, $errno, $errstr, 0.1);
@@ -83,8 +80,8 @@
         $ssh->exec("sudo hostname -v $new_hostname");
     }
 
-    function get_uptime($ip) {
-        $uptime = explode(" ",snmp2_get($ip, PRM_COMMUNITY, OID_UPTIME));
+    function uptime($ip) {
+        $uptime = explode(" ",snmp2_get($ip, get_params("snmp_community"), OID_UPTIME));
         if(is_int($uptime[2])){
             $up = $uptime[2]." day(s) ";
             $uptime = explode(":",$uptime[4]);
@@ -96,15 +93,32 @@
         return $up;
     }
     
+    function get_uptime($ssh){        
+        $uptime = $ssh->exec("uptime | cut -d, -f1" );
+        preg_match('/up(.*)/', $uptime, $resultat);//met dans $resultat tout ce qui se trouve apres up dans $uptime --> regardez la commande uptime sous linux ce qu'elle donne  
+        $resultat=trim($resultat[1]);
+        if (preg_match('/day/i', $resultat))
+        //uptime supérieur a un jour le 1er cut n'a retourné que le nombre de jours d'uptime  
+        //il faut maintenant récupérer le nombre d'heures qui se trouve au champ suivant délimité par la virgule  
+        {
+        $uptime2=$ssh->exec("uptime | cut -d, -f2" );
+        $uptime2=trim($uptime2);
+        $uptime=$resultat." ".$uptime2." hour(s)";
+        }
+        else//uptime inférieur a un jour  
+        $uptime=$resultat;
+        return $uptime;
+    }
+    
     function get_cpu_usg($ip) {
         return 100 - strstr(snmp2_get($ip, PRM_COMMUNITY, OID_CPU_IDLE), ' ');
     }
     
-    function get_cpu_heat($ip){
-        $ssh = new Net_SSH2($ip);
-        if (!$ssh->login('pi', 'raspberry')) {
+    function get_cpu_heat($ssh){
+       /*$ssh = new Net_SSH2($ip);
+        if (!$ssh->login('pi', 'aaa')) {
             exit();
-        }
+        }*/
         return round($ssh->exec("cat /sys/class/thermal/thermal_zone0/temp")/1000);
     }
     
