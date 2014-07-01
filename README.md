@@ -1,7 +1,7 @@
 Rasp Pie
 ========
 
-[Project website here !](http://julienmonchany.github.io/rasp-pie)
+[Project website here !](http://kvalium.github.io/rasp-pie)
 
 Rasp Pie is a web interface for monitoring several Raspberry Pi. 
 It allows to scan your subnet to detect alive Raspberry then you can see their status (% CPU, % RAM, etc.).
